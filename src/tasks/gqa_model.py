@@ -164,13 +164,13 @@ class GQAModel(nn.Module):
         self.graph = LanguageConditionedGraph(4, hid_dim, hid_dim, hid_dim)
         self.output = OriginalVQAClassificationHead(
             hid_dim, hid_dim, num_answers)
-        # self.logit_fc = nn.Sequential(
-        #     nn.Linear(hid_dim, hid_dim * 2),
-        #     GeLU(),
-        #     BertLayerNorm(hid_dim * 2, eps=1e-12),
-        #     nn.Linear(hid_dim * 2, num_answers)
-        # )
-        # self.logit_fc.apply(self.lxrt_encoder.model.init_bert_weights)
+        self.logit_fc = nn.Sequential(
+            nn.Linear(hid_dim, hid_dim * 2),
+            GeLU(),
+            BertLayerNorm(hid_dim * 2, eps=1e-12),
+            nn.Linear(hid_dim * 2, num_answers)
+        )
+        self.logit_fc.apply(self.lxrt_encoder.model.init_bert_weights)
 
     def forward(self, feat, pos, sent):
         """

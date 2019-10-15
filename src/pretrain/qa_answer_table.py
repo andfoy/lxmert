@@ -153,6 +153,3 @@ def load_lxmert_qa(path, model, label2ans):
     assert len(ans_loaded_keys - model_keys) == 0
 
     model.load_state_dict(answer_state_dict, strict=False)
-
-
-
