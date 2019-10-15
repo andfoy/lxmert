@@ -52,7 +52,7 @@ class LanguageConditionedGraph(jit.ScriptModule):
 
     @jit.script_method
     def forward(self, input, hid, query, vis_mask, lang_mask):
-        # type: (Tensor, Tensor, Tensor, Tensor) -> Tensor
+        # type: (Tensor, Tensor, Tensor, Tensor, Tensor) -> Tensor
         # lengths = (1 - lang_mask).sum(-1) - 1
         # lengths = lengths.unsqueeze(0).expand(1, hid.size(-2), hid.size(-1))
         # query = hid.gather(0, lengths)
