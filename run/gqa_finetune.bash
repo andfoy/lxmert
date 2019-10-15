@@ -9,7 +9,7 @@ cp $0 $output/run.bash
 
 # See Readme.md for option details.
 CUDA_VISIBLE_DEVICES=$1 PYTHONPATH=$PYTHONPATH:./src \
-    python src/tasks/gqa.py \
+    python -u src/tasks/gqa.py \
     --train train,valid --valid testdev \
     --llayers 9 --xlayers 5 --rlayers 5 \
     --loadLXMERTQA snap/pretrained/model \

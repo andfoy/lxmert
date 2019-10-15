@@ -37,9 +37,7 @@ class GQAModel(nn.Module):
         :param leng: (b,) Type -- int numpy array
         :return: (b, num_answer) The logit of each answers.
         """
-        x = self.lxrt_encoder(sent, (feat, pos))
+        (feats, x), lang_mask = self.lxrt_encoder(sent, (feat, pos))
         logit = self.logit_fc(x)
 
         return logit
-
-

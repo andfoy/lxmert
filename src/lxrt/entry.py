@@ -43,7 +43,7 @@ def convert_sents_to_features(sents, max_seq_length, tokenizer):
         # Account for [CLS] and [SEP] with "- 2"
         if len(tokens_a) > max_seq_length - 2:
             tokens_a = tokens_a[:(max_seq_length - 2)]
-        
+
         # Keep segment id which allows loading BERT-weights.
         tokens = ["[CLS]"] + tokens_a + ["[SEP]"]
         segment_ids = [0] * len(tokens)
@@ -78,7 +78,7 @@ def set_visual_config(args):
 
 
 class LXRTEncoder(nn.Module):
-    def __init__(self, args, max_seq_length, mode='x'):
+    def __init__(self, args, max_seq_length, mode='xl'):
         super().__init__()
         self.max_seq_length = max_seq_length
         set_visual_config(args)
@@ -117,7 +117,7 @@ class LXRTEncoder(nn.Module):
         output = self.model(input_ids, segment_ids, input_mask,
                             visual_feats=feats,
                             visual_attention_mask=visual_attention_mask)
-        return output
+        return output, input_mask
 
     def save(self, path):
         torch.save(self.model.state_dict(),
@@ -148,7 +148,3 @@ class LXRTEncoder(nn.Module):
 
         # Load weights to model
         self.model.load_state_dict(state_dict, strict=False)
-
-
-
-
