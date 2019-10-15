@@ -206,5 +206,3 @@ if __name__ == "__main__":
         else:
             print("DO NOT USE VALIDATION")
         gqa.train(gqa.train_tuple, gqa.valid_tuple)
-
-
