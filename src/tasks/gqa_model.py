@@ -192,6 +192,7 @@ class GQAModel(nn.Module):
         mask = lang_mask.unsqueeze(-1).expand(lang_feats.size())
         lang_feats = lang_feats.masked_fill(mask.bool(), 1e-32)
         query = lang_feats.sum(1) / lengths
+        query = query.unsqueeze(1)
 
         x = self.graph(vis_feats, lang_feats, query, vis_mask, lang_mask)
         logit = self.output(query, x, vis_mask)
