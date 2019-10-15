@@ -188,7 +188,8 @@ class GQAModel(nn.Module):
 
         lang_feats, vis_feats = feats
         vis_mask = torch.zeros(vis_feats.size(0), 1, vis_feats.size(1),
-                               device=vis_feats.device)
+                               device=vis_feats.device).bool()
+        lang_mask = lang_mask.bool()
         mask = lang_mask.unsqueeze(-1).expand(lang_feats.size())
         lang_feats = lang_feats.masked_fill(mask.bool(), 1e-32)
         query = lang_feats.sum(1) / lengths
