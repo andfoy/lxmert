@@ -136,7 +136,7 @@ class OriginalVQAClassificationHead(nn.Module):
         # lengths = (1 - lang_mask).sum(-1) - 1
         # lengths = lengths.unsqueeze(0).expand(1, hid.size(-2), hid.size(-1))
         # query = hid.gather(0, lengths).transpose(0, 1)
-
+        vis_mask = vis_mask.bool()
         comb = state * self.w14(query)
         comb = F.normalize(comb, dim=-1)
         comb = self.w13(comb)
