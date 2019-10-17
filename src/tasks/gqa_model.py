@@ -62,7 +62,7 @@ class LanguageConditionedGraph(jit.ScriptModule):
         expanded_mask = vis_mask.expand(
             vis_mask.size(0), vis_mask.size(-1), -1)
         expanded_mask = (
-            expanded_mask.transpose(-2, -1) + expanded_mask).clamp(0, 1)
+            expanded_mask.transpose(-2, -1) + expanded_mask).clamp(0, 1).bool()
         lang_mask = lang_mask.unsqueeze(-1)
 
         input = F.normalize(input, dim=-1)
@@ -188,7 +188,7 @@ class GQAModel(nn.Module):
 
         lang_feats, vis_feats = feats
         vis_mask = torch.zeros(vis_feats.size(0), 1, vis_feats.size(1),
-                               device=vis_feats.device).bool()
+                               device=vis_feats.device)
         lang_mask = lang_mask.bool()
         mask = lang_mask.unsqueeze(-1).expand(lang_feats.size())
         lang_feats = lang_feats.masked_fill(mask.bool(), 1e-32)
